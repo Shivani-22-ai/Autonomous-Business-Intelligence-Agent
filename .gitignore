@@ -36,5 +36,7 @@ dist/
 
 # Frontend (for future D3 integration)
 node_modules/
+*.tsbuildinfo
 .DS_Store
 Thumbs.db
+
