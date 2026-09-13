@@ -69,7 +69,7 @@ export interface AnalysisWarning {
 
 // ─── Chart Spec ───────────────────────────────────────────────────────────
 
-export type ChartType = 'line' | 'bar' | 'area' | 'scatter' | 'kpi' | 'none'
+export type ChartType = 'line' | 'bar' | 'area' | 'scatter' | 'kpi' | 'pie' | 'table' | 'none'
 
 export interface ChartDataPoint {
   [key: string]: string | number | null

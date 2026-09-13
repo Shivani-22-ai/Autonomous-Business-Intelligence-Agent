@@ -1,13 +1,13 @@
 /** Tasks B1 + B2 — Natural-language query interface + Insight cards */
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Send, FileText, Lightbulb, BookOpen, Sparkles } from 'lucide-react'
 import { runAnalysis, generateReport } from '@/api/client'
 import type { AnalysisResult } from '@/types'
 import { InsightCard } from '@/components/InsightCard'
 import { ChartRenderer } from '@/charts/ChartRenderer'
-import { LoadingState, EmptyState, ErrorState, PageHeader } from '@/components/ui'
+import { EmptyState, ErrorState, PageHeader } from '@/components/ui'
 
 const EXAMPLE_QUESTIONS = [
   'Which region has the highest revenue?',

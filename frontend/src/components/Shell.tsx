@@ -2,9 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard,
   Upload,
-  MessageSquare,
   Clock,
-  FileText,
   Cpu,
   ChevronRight,
   Menu,

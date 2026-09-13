@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { MessageSquare, FileText, AlertTriangle, CheckCircle, ChevronRight } from 'lucide-react'
 import { getDatasetProfile } from '@/api/client'
 import type { ColumnProfile } from '@/types'
-import { LoadingState, ErrorState, PageHeader, Skeleton } from '@/components/ui'
+import { ErrorState, PageHeader, Skeleton } from '@/components/ui'
 
 const TYPE_COLORS: Record<string, string> = {
   numeric:     'badge-info',

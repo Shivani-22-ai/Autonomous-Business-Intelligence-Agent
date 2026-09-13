@@ -4,10 +4,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   FileText, Download, TrendingUp, AlertTriangle,
-  CheckCircle, Lightbulb, BarChart2, Shield, ArrowLeft,
+  Lightbulb, BarChart2, Shield, ArrowLeft,
 } from 'lucide-react'
 import { getReport } from '@/api/client'
-import type { Report, ReportKPI } from '@/types'
+import type { ReportKPI } from '@/types'
 import { ChartRenderer, KpiCard } from '@/charts/ChartRenderer'
 import { LoadingState, ErrorState, PageHeader, Skeleton } from '@/components/ui'
 

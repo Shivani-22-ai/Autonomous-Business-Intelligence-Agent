@@ -8,6 +8,7 @@ import {
   BarChart, Bar,
   AreaChart, Area,
   ScatterChart, Scatter,
+  PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, ReferenceDot,
 } from 'recharts'
@@ -50,7 +51,16 @@ interface ChartRendererProps {
 }
 
 export function ChartRenderer({ spec, height = 300, className = '' }: ChartRendererProps) {
-  if (!spec || spec.type === 'none') return null
+  if (!spec) return null
+
+  const chartType = spec.type ?? (spec as any).chart_type ?? 'none'
+  if (chartType === 'none') return null
+
+  const xKey = spec.x_key ?? (spec as any).x_axis
+  const yKeys: string[] = (spec.y_keys && spec.y_keys.length > 0)
+    ? spec.y_keys
+    : ((spec as any).y_axis ? [(spec as any).y_axis] : ((spec as any).series ?? []))
+  const data = Array.isArray(spec.data) ? spec.data : []
 
   const commonAxisProps = {
     tick: { fill: 'hsl(224,8%,55%)', fontSize: 12 },
@@ -76,33 +86,33 @@ export function ChartRenderer({ spec, height = 300, className = '' }: ChartRende
         <p className="text-sm font-semibold text-surface-200 mb-3">{spec.title}</p>
       )}
       <ResponsiveContainer width="100%" height={height}>
-        {spec.type === 'bar' ? (
-          <BarChart data={spec.data} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
+        {chartType === 'bar' ? (
+          <BarChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey={spec.x_key} {...commonAxisProps} />
+            <XAxis dataKey={xKey} {...commonAxisProps} />
             <YAxis {...commonAxisProps} tickFormatter={v => formatValue(v)} />
             <Tooltip {...tooltipProps} />
             <Legend wrapperStyle={{ fontSize: 12, color: 'hsl(224,8%,62%)' }} />
-            {spec.y_keys.map((key, i) => (
+            {yKeys.map((key: string, i: number) => (
               <Bar key={key} dataKey={key} fill={getColor(i, spec.colors)} radius={[4, 4, 0, 0]} />
             ))}
           </BarChart>
-        ) : spec.type === 'line' ? (
-          <LineChart data={spec.data} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
+        ) : chartType === 'line' ? (
+          <LineChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey={spec.x_key} {...commonAxisProps} />
+            <XAxis dataKey={xKey} {...commonAxisProps} />
             <YAxis {...commonAxisProps} tickFormatter={v => formatValue(v)} />
             <Tooltip {...tooltipProps} />
             <Legend wrapperStyle={{ fontSize: 12, color: 'hsl(224,8%,62%)' }} />
-            {spec.y_keys.map((key, i) => (
+            {yKeys.map((key: string, i: number) => (
               <Line key={key} type="monotone" dataKey={key} stroke={getColor(i, spec.colors)}
                 strokeWidth={2} dot={false} activeDot={{ r: 5 }} />
             ))}
           </LineChart>
-        ) : spec.type === 'area' ? (
-          <AreaChart data={spec.data} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
+        ) : chartType === 'area' ? (
+          <AreaChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
             <defs>
-              {spec.y_keys.map((key, i) => (
+              {yKeys.map((key: string, i: number) => (
                 <linearGradient key={key} id={`grad-${key}`} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor={getColor(i, spec.colors)} stopOpacity={0.3} />
                   <stop offset="95%" stopColor={getColor(i, spec.colors)} stopOpacity={0.02} />
@@ -110,33 +120,33 @@ export function ChartRenderer({ spec, height = 300, className = '' }: ChartRende
               ))}
             </defs>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey={spec.x_key} {...commonAxisProps} />
+            <XAxis dataKey={xKey} {...commonAxisProps} />
             <YAxis {...commonAxisProps} tickFormatter={v => formatValue(v)} />
             <Tooltip {...tooltipProps} />
             <Legend wrapperStyle={{ fontSize: 12, color: 'hsl(224,8%,62%)' }} />
-            {spec.y_keys.map((key, i) => (
+            {yKeys.map((key: string, i: number) => (
               <Area key={key} type="monotone" dataKey={key}
                 stroke={getColor(i, spec.colors)} strokeWidth={2}
                 fill={`url(#grad-${key})`} />
             ))}
           </AreaChart>
-        ) : spec.type === 'scatter' ? (
+        ) : chartType === 'scatter' ? (
           <ScatterChart margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
             <CartesianGrid {...gridProps} />
-            <XAxis type="number" dataKey={spec.x_key} name={spec.x_label} {...commonAxisProps} tickFormatter={v => formatValue(v)} />
-            <YAxis type="number" dataKey={spec.y_keys[0]} name={spec.y_label} {...commonAxisProps} tickFormatter={v => formatValue(v)} />
+            <XAxis type="number" dataKey={xKey} name={spec.x_label} {...commonAxisProps} tickFormatter={v => formatValue(v)} />
+            <YAxis type="number" dataKey={yKeys[0]} name={spec.y_label} {...commonAxisProps} tickFormatter={v => formatValue(v)} />
             <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={TOOLTIP_STYLE}
               formatter={(value: unknown) => [formatValue(value), '']} />
             <Scatter
-              data={spec.data}
+              data={data}
               fill="hsl(220,56%,62%)"
               fillOpacity={0.7}
             />
             {spec.anomaly_markers?.map(m => (
               <ReferenceDot
                 key={m.index}
-                x={spec.data[m.index]?.[spec.x_key ?? ''] as number}
-                y={spec.data[m.index]?.[spec.y_keys[0]] as number}
+                x={data[m.index]?.[xKey ?? ''] as number}
+                y={data[m.index]?.[yKeys[0]] as number}
                 r={8}
                 fill="hsl(348,90%,62%)"
                 fillOpacity={0.4}
@@ -146,6 +156,24 @@ export function ChartRenderer({ spec, height = 300, className = '' }: ChartRende
               />
             ))}
           </ScatterChart>
+        ) : chartType === 'pie' ? (
+          <PieChart margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
+            <Tooltip {...tooltipProps} />
+            <Legend wrapperStyle={{ fontSize: 12, color: 'hsl(224,8%,62%)' }} />
+            <Pie
+              data={data}
+              dataKey={yKeys[0] || 'value'}
+              nameKey={xKey || 'name'}
+              cx="50%"
+              cy="50%"
+              outerRadius={height / 3.2}
+              label={(entry: any) => String(entry?.[xKey || 'name'] ?? '')}
+            >
+              {data.map((_, index: number) => (
+                <Cell key={`cell-${index}`} fill={getColor(index, spec.colors)} />
+              ))}
+            </Pie>
+          </PieChart>
         ) : (
           <LineChart data={[]} />
         )}
