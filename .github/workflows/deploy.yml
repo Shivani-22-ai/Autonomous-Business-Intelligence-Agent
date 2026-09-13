@@ -34,7 +34,16 @@ jobs:
         env:
           PYTHONPATH: .
         run: |
-          python -m pytest backend/tests/ -v
+          set -o pipefail
+          python -m pytest backend/tests/ -v --tb=short 2>&1 | tee pytest_output.log
+
+      - name: Post Pytest Summary
+        if: always()
+        run: |
+          echo "## Backend Test Results" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -n 120 pytest_output.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
   frontend-checks:
     name: Frontend Lint, Test & Build
