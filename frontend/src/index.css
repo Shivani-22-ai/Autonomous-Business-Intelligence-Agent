@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base reset ─────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    color-scheme: dark;
+    --scrollbar-bg: hsl(224,18%,10%);
+    --scrollbar-thumb: hsl(224,14%,26%);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+  }
+
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-track { background: var(--scrollbar-bg); }
+  *::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+
+  html { @apply h-full text-surface-50 antialiased; }
+
+  body {
+    @apply h-full bg-surface-900 font-sans;
+    background-image:
+      radial-gradient(ellipse 80% 40% at 50% 0%, hsl(263 60% 20% / 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 30% at 80% 100%, hsl(186 60% 15% / 0.25) 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  h1 { @apply text-3xl font-bold tracking-tight; }
+  h2 { @apply text-2xl font-semibold tracking-tight; }
+  h3 { @apply text-xl font-semibold; }
+  h4 { @apply text-base font-semibold; }
+
+  a { @apply text-brand-400 hover:text-brand-300 transition-colors; }
+}
+
+/* ── Component utilities ─────────────────────────────────────────────────── */
+@layer components {
+  .card {
+    @apply bg-surface-800/60 backdrop-blur-md border border-surface-600/40 rounded-2xl shadow-card;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-200 hover:border-brand-500/40 hover:shadow-glow-brand hover:-translate-y-0.5;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-900 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-900/50 hover:shadow-glow-brand;
+  }
+
+  .btn-secondary {
+    @apply btn bg-surface-700 hover:bg-surface-600 text-surface-100 border border-surface-500/50;
+  }
+
+  .btn-ghost {
+    @apply btn hover:bg-surface-700/50 text-surface-200 hover:text-white;
+  }
+
+  .btn-danger {
+    @apply btn bg-accent-rose/10 hover:bg-accent-rose/20 text-accent-rose border border-accent-rose/30;
+  }
+
+  .input {
+    @apply w-full bg-surface-700/60 border border-surface-500/50 rounded-xl px-4 py-2.5 text-sm text-surface-50 placeholder-surface-400 transition-all duration-150 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/50;
+  }
+
+  .textarea {
+    @apply input resize-none;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success { @apply badge bg-accent-emerald/15 text-accent-emerald; }
+  .badge-warning { @apply badge bg-accent-amber/15 text-accent-amber; }
+  .badge-error   { @apply badge bg-accent-rose/15 text-accent-rose; }
+  .badge-info    { @apply badge bg-brand-500/15 text-brand-300; }
+  .badge-neutral { @apply badge bg-surface-600/50 text-surface-300; }
+
+  .shimmer {
+    background: linear-gradient(90deg, hsl(224,14%,18%) 25%, hsl(224,14%,24%) 50%, hsl(224,14%,18%) 75%);
+    background-size: 400px 100%;
+    @apply animate-shimmer;
+  }
+
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-surface-400;
+  }
+
+  .divider {
+    @apply border-t border-surface-700/60;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold tabular-nums;
+  }
+
+  .stat-label {
+    @apply text-xs text-surface-400 font-medium;
+  }
+}
