@@ -7,7 +7,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const srcPath = resolve(__dirname, './src')
 
 export default defineConfig({
-  base: './',
+  // '/' works for Vercel (served from root); HashRouter handles client-side routing
+  base: '/',
   plugins: [react()],
   resolve: {
     alias: {
