@@ -48,8 +48,10 @@ export type AnalysisTool =
   | 'detect_anomalies'
   | 'calculate_kpis'
   | 'detect_trends'
+  | 'summarize_grouped_metrics'
   | 'create_chart_spec'
   | 'generate_report'
+
 
 export type AnalysisStatus = 'pending' | 'running' | 'success' | 'error'
 

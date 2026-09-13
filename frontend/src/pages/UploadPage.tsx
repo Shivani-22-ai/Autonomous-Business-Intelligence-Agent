@@ -2,6 +2,7 @@
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 import { Upload, FileText, CheckCircle, XCircle, AlertTriangle, ArrowRight } from 'lucide-react'
 import { uploadDataset } from '@/api/client'
 import type { UploadResponse } from '@/types'
@@ -14,6 +15,7 @@ type UploadState = 'idle' | 'validating' | 'uploading' | 'success' | 'error'
 
 export function UploadPage() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [state, setState] = useState<UploadState>('idle')
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
@@ -47,13 +49,18 @@ export function UploadPage() {
     try {
       const response = await uploadDataset(file, pct => setProgress(pct))
       setResult(response)
+      
+      // Invalidate queries so dashboard and dropdowns update immediately
+      await queryClient.invalidateQueries({ queryKey: ['datasets'] })
+      await queryClient.invalidateQueries({ queryKey: ['history'] })
+      
       setState('success')
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Upload failed. Please try again.'
       setError(msg)
       setState('error')
     }
-  }, [])
+  }, [queryClient])
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     onDropAccepted: ([file]) => handleFile(file),
@@ -174,9 +181,15 @@ export function UploadPage() {
           <>
             <button
               className="btn-primary flex-1"
+              onClick={() => navigate(`/dashboard`)}
+            >
+              Go to Dashboard <ArrowRight size={15} />
+            </button>
+            <button
+              className="btn-secondary flex-1"
               onClick={() => navigate(`/datasets/${result.dataset_id}/profile`)}
             >
-              View Profile <ArrowRight size={15} />
+              View Profile
             </button>
             <button
               className="btn-secondary flex-1"
