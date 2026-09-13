@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Pytest & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.env
+.env.local
+.venv/
+env/
+venv/
+ENV/
+*.pem
+*.key
+
+# Database & runtime files
+*.db
+*.sqlite3
+abi_agent.db
+
+# Dynamic runtime uploads (preserve directory structure)
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Frontend (for future D3 integration)
+node_modules/
+.DS_Store
+Thumbs.db
