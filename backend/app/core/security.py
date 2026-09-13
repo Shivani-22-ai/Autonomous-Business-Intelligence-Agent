@@ -44,12 +44,15 @@ def sanitize_path(base_dir: Path, filename_or_relative: Union[str, Path]) -> Pat
 
 def sanitize_filename(filename: str) -> str:
     """Ensure filenames contain only safe characters and no path separators."""
-    clean_name = Path(filename).name.strip()
+    # Normalize Windows backslashes so Path(...).name extracts the leaf filename on Linux as well
+    normalized = str(filename).replace("\\", "/")
+    clean_name = Path(normalized).name.strip()
     if not clean_name or not SAFE_FILENAME_REGEX.match(clean_name):
         # Fallback to sanitized ASCII
         clean_name = re.sub(r"[^a-zA-Z0-9_\-\.]", "_", clean_name)
-    if ".." in clean_name or "/" in clean_name or "\\" in clean_name:
-        raise SecurityError("Filename contains prohibited path characters.")
+    clean_name = clean_name.replace("..", "_").replace("/", "").replace("\\", "")
+    if not clean_name:
+        clean_name = "unnamed_file"
     return clean_name
 
 def mask_secrets(data: Any) -> Any:
