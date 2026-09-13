@@ -87,8 +87,8 @@ export function ReportPage() {
     queryKey: ['report', reportId],
     queryFn: () => getReport(reportId!),
     enabled: !!reportId,
-    // Poll while generating
-    refetchInterval: data => data?.status === 'generating' ? 3000 : false,
+    // Poll while generating — React Query v5: callback receives Query object
+    refetchInterval: query => query.state.data?.status === 'generating' ? 3000 : false,
   })
 
   /* D3 — JSON export (P0) */
