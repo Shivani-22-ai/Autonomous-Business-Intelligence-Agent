@@ -1,0 +1,13 @@
+date,region,category,revenue,units_sold,customer_satisfaction,marketing_spend
+2025-01-01,North,Enterprise Software,15200.0,32,4.8,2100.0
+2025-01-02,South,Consulting,8400.0,18,4.2,1400.0
+2025-01-03,East,Cloud Infrastructure,22100.0,45,4.9,3200.0
+2025-01-04,West,Enterprise Software,18900.0,38,4.6,2600.0
+2025-01-05,North,Security Solutions,11300.0,24,4.5,1800.0
+2025-01-06,South,Enterprise Software,16400.0,35,4.7,2300.0
+2025-01-07,East,Consulting,9100.0,20,4.1,1500.0
+2025-01-08,West,Cloud Infrastructure,26500.0,52,5.0,3800.0
+2025-01-09,North,Consulting,7800.0,16,4.0,1200.0
+2025-01-10,South,Cloud Infrastructure,21000.0,42,4.8,3000.0
+2025-01-11,East,Enterprise Software,17200.0,36,4.7,2400.0
+2025-01-12,West,Security Solutions,14300.0,29,4.4,2000.0

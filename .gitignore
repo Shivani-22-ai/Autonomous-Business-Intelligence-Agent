@@ -1,17 +1,24 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-env/
-venv/
-.venv/
 
-# Testing & Coverage
+# Pytest & Coverage
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Environments
+.env
+.env.local
+.venv/
+env/
+venv/
+ENV/
+*.pem
+*.key
 
 # Database & runtime files
 *.db
@@ -21,11 +28,13 @@ abi_agent.db
 # Dynamic runtime uploads (preserve directory structure)
 data/uploads/*
 !data/uploads/.gitkeep
-data/fixtures/*
-!data/fixtures/.gitkeep
 
-# Environment variables & secrets
-.env
-.env.local
-*.pem
-*.key
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Frontend (for future D3 integration)
+node_modules/
+.DS_Store
+Thumbs.db

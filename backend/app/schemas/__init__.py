@@ -1,3 +1,7 @@
+"""
+Pydantic schemas for datasets, profiling, KPIs, trends, anomalies, agent analysis, and reports.
+"""
+
 from backend.app.schemas.common import HealthResponse, StandardErrorResponse
 from backend.app.schemas.dataset import (
     ColumnDescription,
@@ -5,6 +9,11 @@ from backend.app.schemas.dataset import (
     DatasetMetadata,
     DatasetUploadResponse,
     DatasetListResponse,
+    ColumnType,
+    ColumnProfile,
+    DataQualityIssue,
+    DataQualitySummary,
+    DatasetProfile,
 )
 from backend.app.schemas.analysis import (
     AnalysisQueryRequest,
@@ -13,6 +22,22 @@ from backend.app.schemas.analysis import (
     AnalysisHistoryItem,
     AnalysisHistoryResponse,
     ChartSpec,
+)
+from backend.app.schemas.analytics import (
+    KPIMetricType,
+    KPIMetricConfig,
+    KPIMetricResult,
+    KPIEngineResult,
+    TrendPoint,
+    TrendDirection,
+    TrendResult,
+    AnomalyPoint,
+    AnomalyResult,
+    GroupedMetricResult,
+    ChartType,
+    AnalysisType,
+    AnalysisResult,
+    ChartSpec as AnalyticsChartSpec,
 )
 from backend.app.schemas.report import ReportGenerateRequest, ReportResponse, ReportSection
 
@@ -24,12 +49,31 @@ __all__ = [
     "DatasetMetadata",
     "DatasetUploadResponse",
     "DatasetListResponse",
+    "ColumnType",
+    "ColumnProfile",
+    "DataQualityIssue",
+    "DataQualitySummary",
+    "DatasetProfile",
     "AnalysisQueryRequest",
     "AgentPlanOutput",
     "AgentQueryResponse",
     "AnalysisHistoryItem",
     "AnalysisHistoryResponse",
     "ChartSpec",
+    "AnalyticsChartSpec",
+    "KPIMetricType",
+    "KPIMetricConfig",
+    "KPIMetricResult",
+    "KPIEngineResult",
+    "TrendPoint",
+    "TrendDirection",
+    "TrendResult",
+    "AnomalyPoint",
+    "AnomalyResult",
+    "GroupedMetricResult",
+    "ChartType",
+    "AnalysisType",
+    "AnalysisResult",
     "ReportGenerateRequest",
     "ReportResponse",
     "ReportSection",
