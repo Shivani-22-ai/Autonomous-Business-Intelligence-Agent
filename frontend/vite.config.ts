@@ -1,13 +1,17 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const srcPath = resolve(__dirname, './src')
 
 export default defineConfig({
   base: './',
   plugins: [react()],
   resolve: {
     alias: {
-      '@': resolve(import.meta.dirname, './src'),
+      '@': srcPath,
     },
   },
   server: {
@@ -24,8 +28,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     alias: {
-      '@': resolve(import.meta.dirname, './src'),
+      '@': srcPath,
     },
   },
 })
-

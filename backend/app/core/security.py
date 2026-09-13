@@ -25,9 +25,12 @@ def sanitize_path(base_dir: Path, filename_or_relative: Union[str, Path]) -> Pat
     Guards against directory traversal attacks like ../../etc/passwd.
     """
     resolved_base = base_dir.resolve()
-    target_path = (base_dir / filename_or_relative).resolve()
+    clean_relative = str(filename_or_relative).lstrip("/\\")
+    target_path = (resolved_base / clean_relative).resolve()
     
-    if not str(target_path).startswith(str(resolved_base)):
+    try:
+        target_path.relative_to(resolved_base)
+    except ValueError:
         raise SecurityError("Path traversal detected. Access denied.")
     return target_path
 
