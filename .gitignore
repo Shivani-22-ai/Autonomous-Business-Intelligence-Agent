@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Database & runtime files
+*.db
+*.sqlite3
+abi_agent.db
+
+# Dynamic runtime uploads (preserve directory structure)
+data/uploads/*
+!data/uploads/.gitkeep
+data/fixtures/*
+!data/fixtures/.gitkeep
+
+# Environment variables & secrets
+.env
+.env.local
+*.pem
+*.key
