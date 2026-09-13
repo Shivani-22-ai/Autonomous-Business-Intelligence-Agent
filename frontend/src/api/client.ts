@@ -216,7 +216,17 @@ function normalizeReport(raw: any): Report {
 
 // ─── Client-Side Dynamic CSV Profiler ───────────────────────────────────────
 async function parseAndProfileCSV(file: File, datasetId: string): Promise<{ dataset: Dataset; profile: DatasetProfile; rawRows: any[] }> {
-  const text = await file.text()
+  let text = ''
+  if (typeof file.text === 'function') {
+    text = await file.text()
+  } else {
+    text = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result ?? ''))
+      reader.onerror = reject
+      reader.readAsText(file)
+    })
+  }
   const lines = text.split(/\r?\n/).filter(line => line.trim().length > 0)
   if (lines.length === 0) {
     throw new Error('The uploaded file is empty.')

@@ -22,14 +22,22 @@ def validate_dataset_id(dataset_id: str) -> str:
 def sanitize_path(base_dir: Path, filename_or_relative: Union[str, Path]) -> Path:
     """
     Ensure the resolved path stays strictly within base_dir.
-    Guards against directory traversal attacks like ../../etc/passwd.
+    Guards against directory traversal attacks like ../../etc/passwd or ..\\..\\win.ini.
     """
     resolved_base = base_dir.resolve()
-    clean_relative = str(filename_or_relative).lstrip("/\\")
+    # Normalize Windows backslashes to forward slashes for cross-platform compatibility (Linux CI vs Windows)
+    raw_str = str(filename_or_relative).replace("\\", "/")
+    parts = [p for p in raw_str.split("/") if p]
+    if ".." in parts:
+        raise SecurityError("Path traversal detected. Access denied.")
+
+    clean_relative = raw_str.lstrip("/")
     target_path = (resolved_base / clean_relative).resolve()
     
     try:
-        target_path.relative_to(resolved_base)
+        rel = target_path.relative_to(resolved_base)
+        if str(rel) == ".":
+            raise SecurityError("Path traversal detected. Access denied.")
     except ValueError:
         raise SecurityError("Path traversal detected. Access denied.")
     return target_path
