@@ -74,3 +74,31 @@ def test_profiler_json_serializability(sample_business_df):
     dumped = profile.model_dump()
     assert dumped["dataset_id"] == "json-id"
     assert len(dumped["preview"]) == 5
+
+
+def test_profiler_invalid_dates_and_mixed_types():
+    # Dataset with mixed types and unparseable invalid dates
+    df = pd.DataFrame({
+        "mixed_col": [100, "N/A", 200, "corrupted", 500],
+        "invalid_date": ["2023-01-01", "not-a-date", "2023-03-15", "invalid-timestamp", "2023-05-20"],
+    })
+    profile = DatasetProfiler.profile_dataframe(df, dataset_id="mixed-test")
+    col_map = {c.name: c for c in profile.columns}
+
+    # Mixed col should be treated as text or categorical, gracefully handling coercion
+    assert col_map["mixed_col"].inferred_type in {ColumnType.TEXT, ColumnType.CATEGORICAL}
+    # Invalid date with corrupted strings should not crash and should fall back safely
+    assert col_map["invalid_date"].inferred_type in {ColumnType.TEXT, ColumnType.CATEGORICAL, ColumnType.DATETIME}
+
+
+def test_profiler_extreme_numeric_values():
+    # Dataset with extreme values, negative values, and very large floats
+    df = pd.DataFrame({
+        "extreme_num": [1.0, 1e9, -500.0, 0.0, 999999999.99]
+    })
+    profile = DatasetProfiler.profile_dataframe(df, dataset_id="extreme-test")
+    col_profile = profile.columns[0]
+    assert col_profile.inferred_type == ColumnType.NUMERIC
+    assert col_profile.stats["max"] == 1e9
+    assert col_profile.stats["min"] == -500.0
+
