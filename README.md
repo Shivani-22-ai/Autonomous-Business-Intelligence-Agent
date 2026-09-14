@@ -2,12 +2,23 @@
 
 An enterprise-grade Autonomous Business Intelligence platform that transforms uploaded business data into explainable, mathematically verified, and actionable analytics through a bounded AI agent workflow.
 
-![Build & Test](https://img.shields.io/badge/backend%20tests-69%2F69%20passed-emerald)
-![Frontend Tests](https://img.shields.io/badge/frontend%20tests-39%2F39%20passed-emerald)
+## 🚀 Live Demo
+
+| Deployment | URL | Status |
+|---|---|---|
+| **Production (Vercel)** | **[https://frontend-psi-mauve-15.vercel.app](https://frontend-psi-mauve-15.vercel.app)** | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| GitHub Pages | [https://shivani-22-ai.github.io/Autonomous-Business-Intelligence-Agent/](https://shivani-22-ai.github.io/Autonomous-Business-Intelligence-Agent/) | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+
+> **No backend needed to try the demo** — the app runs fully in mock mode with built-in demo data.
+
+---
+
+[![CI Pipeline](https://github.com/Shivani-22-ai/Autonomous-Business-Intelligence-Agent/actions/workflows/deploy.yml/badge.svg)](https://github.com/Shivani-22-ai/Autonomous-Business-Intelligence-Agent/actions/workflows/deploy.yml)
+![Backend Tests](https://img.shields.io/badge/backend%20tests-69%2F69%20passed-brightgreen)
+![Frontend Tests](https://img.shields.io/badge/frontend%20tests-40%2F40%20passed-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%2B%20%7C%203.14-blue)
 ![React](https://img.shields.io/badge/react-19-cyan)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-teal)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.30%2B-red)
 
 ---
 
