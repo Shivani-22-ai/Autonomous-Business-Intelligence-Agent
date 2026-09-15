@@ -32,6 +32,34 @@ export const MOCK_DATASETS: Dataset[] = [
   },
 ]
 
+export const MOCK_DATA_ROWS_DEMO: Record<string, any>[] = [
+  { order_id: 'ORD-0001', order_date: '2024-01-03', region: 'North', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 5, revenue: 12499.95, cost: 8500.00, profit: 3999.95 },
+  { order_id: 'ORD-0002', order_date: '2024-01-07', region: 'South', product: 'Desk Chair', customer_segment: 'SMB', units: 4, revenue: 1800.00, cost: 1200.00, profit: 600.00 },
+  { order_id: 'ORD-0003', order_date: '2024-01-12', region: 'East', product: 'Monitor 27"', customer_segment: 'Consumer', units: 2, revenue: 900.00, cost: 600.00, profit: 300.00 },
+  { order_id: 'ORD-0004', order_date: '2024-02-04', region: 'West', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 3, revenue: 7499.97, cost: 5100.00, profit: 2399.97 },
+  { order_id: 'ORD-0005', order_date: '2024-02-18', region: 'North', product: 'Wireless Mouse', customer_segment: 'Consumer', units: 10, revenue: 499.90, cost: 250.00, profit: 249.90 },
+  { order_id: 'ORD-0006', order_date: '2024-03-02', region: 'East', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 6, revenue: 14999.94, cost: 10200.00, profit: 4799.94 },
+  { order_id: 'ORD-0007', order_date: '2024-03-15', region: 'South', product: 'Monitor 27"', customer_segment: 'SMB', units: 3, revenue: 1350.00, cost: 900.00, profit: 450.00 },
+  { order_id: 'ORD-0008', order_date: '2024-04-10', region: 'West', product: 'Desk Chair', customer_segment: 'SMB', units: 8, revenue: 3600.00, cost: 2400.00, profit: 1200.00 },
+  { order_id: 'ORD-0009', order_date: '2024-04-22', region: 'North', product: 'Monitor 27"', customer_segment: 'Enterprise', units: 5, revenue: 2250.00, cost: 1500.00, profit: 750.00 },
+  { order_id: 'ORD-0010', order_date: '2024-05-05', region: 'East', product: 'Desk Chair', customer_segment: 'Consumer', units: 2, revenue: 900.00, cost: 600.00, profit: 300.00 },
+  { order_id: 'ORD-0011', order_date: '2024-05-19', region: 'South', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 4, revenue: 9999.96, cost: 6800.00, profit: 3199.96 },
+  { order_id: 'ORD-0012', order_date: '2024-06-08', region: 'West', product: 'Wireless Mouse', customer_segment: 'Consumer', units: 15, revenue: 749.85, cost: 375.00, profit: 374.85 },
+  { order_id: 'ORD-0013', order_date: '2024-06-25', region: 'North', product: 'Desk Chair', customer_segment: 'Enterprise', units: 12, revenue: 5400.00, cost: 3600.00, profit: 1800.00 },
+  { order_id: 'ORD-0014', order_date: '2024-07-11', region: 'East', product: 'Monitor 27"', customer_segment: 'SMB', units: 4, revenue: 1800.00, cost: 1200.00, profit: 600.00 },
+  { order_id: 'ORD-0015', order_date: '2024-07-29', region: 'South', product: 'Wireless Mouse', customer_segment: 'SMB', units: 8, revenue: 399.92, cost: 200.00, profit: 199.92 },
+  { order_id: 'ORD-0016', order_date: '2024-08-14', region: 'West', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 5, revenue: 12499.95, cost: 8500.00, profit: 3999.95 },
+  { order_id: 'ORD-0017', order_date: '2024-08-27', region: 'North', product: 'Laptop Pro', customer_segment: 'SMB', units: 2, revenue: 4999.98, cost: 3400.00, profit: 1599.98 },
+  { order_id: 'ORD-0018', order_date: '2024-09-09', region: 'East', product: 'Wireless Mouse', customer_segment: 'Consumer', units: 20, revenue: 999.80, cost: 500.00, profit: 499.80 },
+  { order_id: 'ORD-0019', order_date: '2024-09-23', region: 'South', product: 'Desk Chair', customer_segment: 'Enterprise', units: 6, revenue: 2700.00, cost: 1800.00, profit: 900.00 },
+  { order_id: 'ORD-0020', order_date: '2024-10-12', region: 'West', product: 'Monitor 27"', customer_segment: 'Consumer', units: 3, revenue: 1350.00, cost: 900.00, profit: 450.00 },
+  { order_id: 'ORD-0021', order_date: '2024-10-28', region: 'North', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 8, revenue: 19999.92, cost: 13600.00, profit: 6399.92 },
+  { order_id: 'ORD-0022', order_date: '2024-11-15', region: 'East', product: 'Laptop Pro', customer_segment: 'Enterprise', units: 10, revenue: 24999.90, cost: 17000.00, profit: 7999.90 },
+  { order_id: 'ORD-0023', order_date: '2024-11-29', region: 'West', product: 'Desk Chair', customer_segment: 'SMB', units: 5, revenue: 2250.00, cost: 1500.00, profit: 750.00 },
+  { order_id: 'ORD-0024', order_date: '2024-12-10', region: 'South', product: 'Monitor 27"', customer_segment: 'Consumer', units: 2, revenue: 900.00, cost: 600.00, profit: 300.00 },
+  { order_id: 'ORD-0025', order_date: '2024-12-22', region: 'North', product: 'Wireless Mouse', customer_segment: 'Enterprise', units: 25, revenue: 1249.75, cost: 625.00, profit: 624.75 },
+]
+
 export const MOCK_PROFILE: DatasetProfile = {
   dataset_id: 'demo-dataset-001',
   filename: 'business_sales_demo.csv',

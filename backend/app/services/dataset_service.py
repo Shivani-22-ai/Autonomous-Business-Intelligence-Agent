@@ -81,6 +81,16 @@ class DatasetService:
                 destination_path.unlink()
             raise ValidationError(f"Failed to parse file: {str(e)}")
 
+        if df.empty or len(df) == 0:
+            if destination_path.exists():
+                destination_path.unlink()
+            raise ValidationError(f"Dataset '{clean_filename}' contains no data rows (0 rows).")
+
+        if len(df.columns) == 0:
+            if destination_path.exists():
+                destination_path.unlink()
+            raise ValidationError(f"Dataset '{clean_filename}' contains no columns.")
+
         schema_cols, quality = self._profile_dataframe(df)
 
         # Store relative file path inside data directory

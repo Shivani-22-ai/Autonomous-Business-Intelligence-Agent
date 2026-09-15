@@ -48,10 +48,45 @@ ORD-105,North,Widget B,4200,2100,12`
     expect(regCol?.inferred_type).toBe('categorical')
     expect(regCol?.unique_count).toBe(4)
 
-    // 4. Verify analysis query works against the uploaded dataset
-    const analysisRes = await runAnalysis(uploadRes.dataset_id, 'Show revenue by region')
-    expect(analysisRes.status).toBe('success')
-    expect(analysisRes.insights.length).toBeGreaterThan(0)
-    expect(analysisRes.chart_spec?.data.length).toBeGreaterThan(0)
+    // 4. Verify analysis query answers based on actual dataset and question
+    // Query 1: Revenue by region
+    const resRegion = await runAnalysis(uploadRes.dataset_id, 'Which region has the highest revenue?')
+    expect(resRegion.status).toBe('success')
+    expect(resRegion.tool).toBe('summarize_grouped_metrics')
+    expect(resRegion.chart_spec?.x_key).toBe('region')
+    // North has 1500 + 4200 = 5700
+    const topRegionRow = resRegion.chart_spec?.data[0]
+    expect(topRegionRow?.region).toBe('North')
+    expect(topRegionRow?.revenue).toBe(5700)
+
+    // Query 2: Units by product (different metric and dimension!)
+    const resProduct = await runAnalysis(uploadRes.dataset_id, 'Show total units by product')
+    expect(resProduct.status).toBe('success')
+    expect(resProduct.chart_spec?.x_key).toBe('product')
+    // Widget B has 8 + 12 = 20 units
+    const topProductRow = resProduct.chart_spec?.data[0]
+    expect(topProductRow?.product).toBe('Widget B')
+    expect(topProductRow?.units).toBe(20)
+
+    // Query 3: KPI sum calculation (total revenue = 1500+2400+3100+1800+4200 = 13000)
+    const resKpi = await runAnalysis(uploadRes.dataset_id, 'What is the total revenue?')
+    expect(resKpi.status).toBe('success')
+    expect(resKpi.tool).toBe('calculate_kpis')
+    const totalInsight = resKpi.insights.find(i => i.label.toLowerCase().includes('total'))
+    expect(totalInsight?.value).toContain('13,000')
+  })
+
+  it('rejects invalid or empty files with clear error messages', async () => {
+    // 1. Empty file (0 bytes)
+    const emptyFile = new File([], 'empty.csv', { type: 'text/csv' })
+    await expect(uploadDataset(emptyFile)).rejects.toThrow(/empty/i)
+
+    // 2. Header-only file without data rows
+    const headerOnlyFile = new File(['order_id,region,revenue\n'], 'headers_only.csv', { type: 'text/csv' })
+    await expect(uploadDataset(headerOnlyFile)).rejects.toThrow(/0 data rows/i)
+
+    // 3. Binary corrupted file
+    const binaryFile = new File(['\u0000\u0001\u0002PK\u0003\u0004corrupted'], 'bad.csv', { type: 'text/csv' })
+    await expect(uploadDataset(binaryFile)).rejects.toThrow(/binary|corrupted/i)
   })
 })
